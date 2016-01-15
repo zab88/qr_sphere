@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="415ee1c5-89b8-444e-87f9-4a434b54d940" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/balls/11.3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/balls/15.3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/balls/29.2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/balls/5.2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FF/FF.py" afterPath="$PROJECT_DIR$/FF/FF.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/batch.py" afterPath="$PROJECT_DIR$/batch.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/one.py" afterPath="$PROJECT_DIR$/one.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="qr_reader2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="batch.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="batch.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/batch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="468" max-vertical-offset="867">
-              <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.21303259" vertical-offset="0" max-vertical-offset="867">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -57,10 +50,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FF.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FF.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FF/FF.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.572973" vertical-offset="0" max-vertical-offset="1479">
+            <state vertical-scroll-proportion="-32.827587" vertical-offset="0" max-vertical-offset="1479">
               <caret line="56" column="33" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -78,8 +71,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/FF/FF.py" />
-        <option value="$PROJECT_DIR$/batch.py" />
         <option value="$PROJECT_DIR$/one.py" />
+        <option value="$PROJECT_DIR$/batch.py" />
       </list>
     </option>
   </component>
@@ -162,7 +155,7 @@
       <console-settings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.one">
+  <component name="RunManager" selected="Python.batch">
     <configuration default="false" name="one" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -404,22 +397,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/batch.py">
+    <entry file="file://$PROJECT_DIR$/FF/FF.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="468" max-vertical-offset="867">
-          <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
+        <state vertical-scroll-proportion="-32.827587" vertical-offset="0" max-vertical-offset="1479">
+          <caret line="56" column="33" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FF/FF.py">
+    <entry file="file://$PROJECT_DIR$/batch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.572973" vertical-offset="0" max-vertical-offset="1479">
-          <caret line="56" column="33" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.21303259" vertical-offset="0" max-vertical-offset="867">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -3,7 +3,7 @@ import cv2, os, subprocess
 from FF import FF
 
 myDir = 'balls'
-tmpDir = 'tmp2'
+tmpDir = 'tmp'
 files_num = 0
 files_found = 0
 
