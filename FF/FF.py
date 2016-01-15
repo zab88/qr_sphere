@@ -12,15 +12,20 @@ class FF:
     @staticmethod
     def black_and_white(img):
         img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY )
-        img_cropped = FF.crop_img(img_grey)
+        img_cropped = FF.crop_img2(img_grey)
         img_bin = cv2.threshold(img_cropped, 127, 255, cv2.THRESH_OTSU)[1]
-        # img_bin = cv2.threshold(img_cropped, 127, 255, cv2.THRESH_BINARY)[1]
+        # img_bin = cv2.threshold(img_cropped, 100, 255, cv2.THRESH_BINARY)[1]
         return img_bin
 
     @staticmethod
     def crop_img(img_origin):
         h_origin, w_origin = img_origin.shape
         return img_origin[60:h_origin-71, 89:w_origin-113]
+
+    @staticmethod
+    def crop_img2(img_origin):
+        h_origin, w_origin = img_origin.shape
+        return img_origin[150:h_origin-220, 670:w_origin-580]
 
     @staticmethod
     def toSphere(src):
@@ -30,29 +35,29 @@ class FF:
         intrinsics = np.zeros((3, 3), np.float64)
 
 
-        intrinsics[0, 0] = 3500
+        intrinsics[0, 0] = 8500
         # intrinsics[0, 1] = -2000.0
         # intrinsics[1, 0] = 2000.0
-        intrinsics[1, 1] = 3500
+        intrinsics[1, 1] = 8500
         intrinsics[2, 2] = 1.0
         intrinsics[0, 2] = w/2.
         intrinsics[1, 2] = h/2.
         # print(intrinsics)
 
         newCamMtx = np.zeros((3, 3), np.float64)
-        newCamMtx[0, 0] = 3000
+        newCamMtx[0, 0] = 7000
         # intrinsics[0, 1] = -2000.0
         # intrinsics[1, 0] = 2000.0
-        newCamMtx[1, 1] = 3000
+        newCamMtx[1, 1] = 7000
         newCamMtx[2, 2] = 1.0
         newCamMtx[0, 2] = w/2.
         newCamMtx[1, 2] = h/2.
 
         dist_coeffs = np.zeros((1, 4), np.float64)
-        dist_coeffs[0, 0] = -50.0
+        dist_coeffs[0, 0] = -70.0
         dist_coeffs[0, 1] = 0.0
         dist_coeffs[0, 2] = 0.0
-        dist_coeffs[0, 3] = -0.0
+        dist_coeffs[0, 3] = 0.0
         # dist_coeffs = np.array([[float(k1)],[float(k2)],[float(p1)], [float(p2)]], np.float64)
         # print dist_coeffs
 
