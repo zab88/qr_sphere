@@ -14,10 +14,10 @@ cv2.imwrite(tmpDir + os.path.sep + file, new_img)
 
 print(os.path.dirname(__file__)+os.path.sep+tmpDir+os.path.sep + file)
 qr_found = FF.FF.getQR(os.path.dirname(__file__)+os.path.sep+tmpDir+os.path.sep + file)
+qr_init = FF.FF.getQR(abs_file_path)
 if qr_found is not None:
     print qr_found
 else:
-    qr_init = FF.FF.getQR(abs_file_path)
     if qr_init is not None:
         print('INIT FOUND '+qr_init)
 
