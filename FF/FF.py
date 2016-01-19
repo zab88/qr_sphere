@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import subprocess, os
+import ConfigParser
 
 class FF:
     # zbar = 'C:/Program Files (x86)/ZBar/bin/zbarimg.exe'
@@ -10,11 +11,23 @@ class FF:
         pass
 
     @staticmethod
+    def readSettings():
+        Config = ConfigParser.ConfigParser()
+        Config.read("settings.ini")
+        FF.crop_top = Config.getint('Crop_balls2', 'crop_top')
+        FF.crop_left = Config.getint('Crop_balls2', 'crop_left')
+        FF.crop_bottom = Config.getint('Crop_balls2', 'crop_bottom')
+        FF.crop_right = Config.getint('Crop_balls2', 'crop_right')
+
+    @staticmethod
     def black_and_white(img):
         img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY )
-        img_cropped = FF.crop_img2(img_grey)
+        img_blur = cv2.blur(img_grey, (5, 5))
+        img_cropped = FF.crop_img3(img_blur)
         img_bin = cv2.threshold(img_cropped, 127, 255, cv2.THRESH_OTSU)[1]
         # img_bin = cv2.threshold(img_cropped, 100, 255, cv2.THRESH_BINARY)[1]
+        # img_bin = cv2.morphologyEx(img_bin, cv2.MORPH_OPEN, (3,3), iterations=1)
+        # img_bin = cv2.morphologyEx(img_bin, cv2.MORPH_CLOSE, (13,13), iterations=5)
         return img_bin
 
     @staticmethod
@@ -26,6 +39,11 @@ class FF:
     def crop_img2(img_origin):
         h_origin, w_origin = img_origin.shape
         return img_origin[150:h_origin-220, 670:w_origin-580]
+
+    @staticmethod
+    def crop_img3(img_origin):
+        h_origin, w_origin = img_origin.shape
+        return img_origin[FF.crop_top:h_origin-FF.crop_bottom, FF.crop_left:w_origin-FF.crop_right]
 
     @staticmethod
     def toSphere(src):

@@ -2,9 +2,10 @@ import numpy as np
 import cv2, os, subprocess
 from FF import FF
 
-file = '11.3.png'
+FF.FF.readSettings()
+file = '1.2.png'
 tmpDir = 'tmp'
-abs_file_path = os.path.dirname(__file__)+'/balls/'+file
+abs_file_path = os.path.dirname(__file__)+'/balls2/'+file
 
 img_origin = cv2.imread(abs_file_path)
 
@@ -14,6 +15,7 @@ cv2.imwrite(tmpDir + os.path.sep + file, new_img)
 
 # rotate and apply distortion
 h_res, w_res = black_cropped.shape
+print(h_res, w_res)
 M = cv2.getRotationMatrix2D((w_res/2, h_res/2), 45, 1)
 black_rotated = cv2.warpAffine(black_cropped.copy(), M, (w_res, h_res))
 new_img_rotated = FF.FF.toSphere(black_rotated.copy())
@@ -32,7 +34,7 @@ if qr_rotated is not None:
 
 
 # cv2.imshow("Image origin", img_origin)
-cv2.imshow("Image origin", black_cropped)
-cv2.imshow("Image rotated", new_img_rotated)
-cv2.imshow("Image res", new_img)
+cv2.imshow("Image origin", cv2.pyrDown(black_cropped))
+cv2.imshow("Image rotated", cv2.pyrDown(new_img_rotated))
+cv2.imshow("Image res", cv2.pyrDown(new_img))
 cv2.waitKey(0)

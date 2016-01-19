@@ -2,7 +2,8 @@ import numpy as np
 import cv2, os, subprocess
 from FF import FF
 
-myDir = 'balls'
+FF.FF.readSettings()
+myDir = 'balls2'
 tmpDir = 'tmp'
 files_num = 0
 files_found = 0
