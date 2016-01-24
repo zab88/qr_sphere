@@ -42,7 +42,7 @@ class FF:
 
     @staticmethod
     def crop_img3(img_origin):
-        h_origin, w_origin = img_origin.shape
+        h_origin, w_origin = img_origin.shape[:2]
         return img_origin[FF.crop_top:h_origin-FF.crop_bottom, FF.crop_left:w_origin-FF.crop_right]
 
     @staticmethod
@@ -98,3 +98,14 @@ class FF:
             out = e.output
 
         return result
+
+    @staticmethod
+    def adjust_gamma(image, gamma=1.0):
+        # build a lookup table mapping the pixel values [0, 255] to
+        # their adjusted gamma values
+        invGamma = 1.0 / gamma
+        table = np.array([((i / 255.0) ** invGamma) * 255
+            for i in np.arange(0, 256)]).astype("uint8")
+
+        # apply gamma correction using the lookup table
+        return cv2.LUT(image, table)
