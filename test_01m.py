@@ -66,8 +66,8 @@ for subdir, dirs, files in os.walk(myDir):
         thresh = 255 - thresh
 
         #depend on version of cv2, it changed in 3.0
-        _, contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # _, contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # contours,h = cv2.findContours(thresh.copy(), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
         # contours,h = cv2.findContours(thresh.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -114,11 +114,16 @@ for subdir, dirs, files in os.walk(myDir):
                 cc_y = int( float(all_centers[i[0]][1]+all_centers[i[1]][1]+all_centers[i[2]][1])/3.0 )
                 cv2.circle(img, (cc_x, cc_y), 3, (0, 55, 255), 3)
 
-                sMx, dMx = FF.FF.getWarpMx(all_squires[i[0]], all_squires[i[1]], all_squires[i[2]], [cc_y, cc_x], corner_num)
+                sMx, dMx, drawMx = FF.FF.getWarpMx(all_squires[i[0]], all_squires[i[1]], all_squires[i[2]], [cc_x, cc_y], corner_num)
                 #show vertextes
-                cv2.putText(img, '1', tuple(sMx[0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
-                cv2.putText(img, '2', tuple(sMx[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
-                cv2.putText(img, '3', tuple(sMx[2]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                # cv2.putText(img, '1', tuple(sMx[0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                # cv2.putText(img, '2', tuple(sMx[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                # cv2.putText(img, '3', tuple(sMx[2]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                cv2.circle(img,tuple(drawMx[0]),4, (127, 255, 255), 2)
+                cv2.circle(img,tuple(drawMx[1]),4, (127, 255, 255), 2)
+                cv2.circle(img,tuple(drawMx[2]),4, (127, 255, 255), 2)
+                cv2.circle(img,tuple(drawMx[3]),4, (127, 255, 0), 3)
+                print(sMx)
 
                 # thresh2 = 255-thresh
                 rQr = FF.FF.getRightQr(sMx, dMx, gray)

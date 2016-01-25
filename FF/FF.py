@@ -117,38 +117,110 @@ class FF:
         return cv2.LUT(image, table)
 
     @staticmethod
+    def line_intersection(line1, line2):
+        xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
+        ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1]) #Typo was here
+
+        def det(a, b):
+            return a[0] * b[1] - a[1] * b[0]
+
+        div = det(xdiff, ydiff)
+        if div == 0:
+           raise Exception('lines do not intersect')
+
+        d = (det(*line1), det(*line2))
+        x = det(d, xdiff) / div
+        y = det(d, ydiff) / div
+        return int(x), int(y)
+
+    @staticmethod
     def getWarpMx(s1, s2, s3, cent, corner_num):
-        far1, far2, far3 = 0, 0, 0
+        far1, far2, far3, cl1, cl2, cl3 = 0, 0, 0, 99999, 99999, 99999
         farP1, farP2, farP3 = None, None, None
+        clP1, clP2, clP3 = None, None, None
+        unP1, unP2, unP4 = None, None, None #closest points to unknown
+        pp_edge = None
         for p in s1:
             cur_dist = np.linalg.norm(p-cent)
             if cur_dist > far1:
                 far1 = cur_dist
                 farP1 = p
+            if cur_dist < cl1:
+                cl1 = cur_dist
+                clP1 = p
 
         for p in s2:
             cur_dist = np.linalg.norm(p-cent)
             if cur_dist > far2:
                 far2 = cur_dist
                 farP2 = p
+            if cur_dist < cl2:
+                cl2 = cur_dist
+                clP2 = p
 
         for p in s3:
             cur_dist = np.linalg.norm(p-cent)
             if cur_dist > far3:
                 far3 = cur_dist
                 farP3 = p
+            if cur_dist < cl3:
+                cl3 = cur_dist
+                clP3 = p
 
-        source = np.array([[farP1[0][0], farP1[0][1]], [farP2[0][0], farP2[0][1]], [farP3[0][0], farP3[0][1]]])
+        if corner_num == 1:
+            pp_edge = farP1
+            SS1 = s2; SS2 = s3; SS0 = s1;
+            pp_edge1 = farP2; pp_edge2 = farP3
+        if corner_num == 2:
+            pp_edge = farP2
+            SS1 = s1; SS2 = s3; SS0 = s2;
+            pp_edge1 = farP1; pp_edge2 = farP3
+        if corner_num == 3:
+            pp_edge = farP3
+            SS1 = s1; SS2 = s2; SS0 = s3;
+            pp_edge1 = farP1; pp_edge2 = farP2
+
+        #Searching unP1 and unP2
+        dist_max = 0
+        for p in SS1:
+            cur_dist = np.linalg.norm(p-pp_edge)
+            if (p[0][0]==farP1[0][0] and p[0][1]==farP1[0][1]) or (p[0][0]==farP2[0][0] and p[0][1]==farP2[0][1]) or (p[0][0]==farP3[0][0] and p[0][1]==farP3[0][1]):
+                continue
+            if cur_dist > dist_max:
+                dist_max = cur_dist
+                unP1 = p
+        dist_max = 0
+        for p in SS2:
+            cur_dist = np.linalg.norm(p-pp_edge)
+            if (p[0][0]==farP1[0][0] and p[0][1]==farP1[0][1]) or (p[0][0]==farP2[0][0] and p[0][1]==farP2[0][1]) or (p[0][0]==farP3[0][0] and p[0][1]==farP3[0][1]):
+                continue
+            if cur_dist > dist_max:
+                dist_max = cur_dist
+                unP2 = p
+
+        # getting unknown vertex
+        ux, uy = FF.line_intersection((list(unP1[0]), list(pp_edge1[0])), (list(unP2[0]), list(pp_edge2[0])))
+        unP4 = [ux, uy]
+
+        # source = np.array([[farP1[0][0], farP1[0][1]], [farP2[0][0], farP2[0][1]], [farP3[0][0], farP3[0][1]]])
+        source_draw = np.array([[pp_edge1[0][0], pp_edge1[0][1]],
+                           [pp_edge[0][0], pp_edge[0][1]],
+                           [pp_edge2[0][0], pp_edge2[0][1]],
+                           [ux, uy]])
         # print(source)
+        source = np.array([[pp_edge1[0][1], pp_edge1[0][0]],
+                           [pp_edge[0][1], pp_edge[0][0]],
+                           [pp_edge2[0][1], pp_edge2[0][0]],
+                           [uy, ux]])
 
         # 4 pixels for squire, so 84=4*21
         # destination = np.array([[0,0], [0,99], [0,199],
         #           [99,0],[99,99],[99,199],
         #           [199,0],[199,99],[199,199]])
-        destination = np.array([[0,0], [0,83], [83,83]])
+        destination = np.array([[0,0], [0,83], [83,83], [83,0]])
         # source = np.array([[43, 55], [166,46],[274,285]])
 
-        return source, destination
+        return source, destination, source_draw
 
     @staticmethod
     def getRightQr( source, destination, img):
