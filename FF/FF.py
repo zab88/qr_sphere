@@ -171,14 +171,17 @@ class FF:
             pp_edge = farP1
             SS1 = s2; SS2 = s3; SS0 = s1;
             pp_edge1 = farP2; pp_edge2 = farP3
+            pp_in1=clP2; pp_in2=clP3; pp_in0=clP1
         if corner_num == 2:
             pp_edge = farP2
             SS1 = s1; SS2 = s3; SS0 = s2;
             pp_edge1 = farP1; pp_edge2 = farP3
+            pp_in1=clP1; pp_in2=clP3; pp_in0=clP2
         if corner_num == 3:
             pp_edge = farP3
             SS1 = s1; SS2 = s2; SS0 = s3;
             pp_edge1 = farP1; pp_edge2 = farP2
+            pp_in1=clP1; pp_in2=clP2; pp_in0=clP3
 
         #Searching unP1 and unP2
         dist_max = 0
@@ -206,18 +209,27 @@ class FF:
         source_draw = np.array([[pp_edge1[0][0], pp_edge1[0][1]],
                            [pp_edge[0][0], pp_edge[0][1]],
                            [pp_edge2[0][0], pp_edge2[0][1]],
-                           [ux, uy]])
+                           [ux, uy],
+                           [unP1[0][0], unP1[0][1]],
+                           [unP2[0][0], unP2[0][1]]
+                           ])
         # print(source)
         source = np.array([[pp_edge1[0][1], pp_edge1[0][0]],
                            [pp_edge[0][1], pp_edge[0][0]],
                            [pp_edge2[0][1], pp_edge2[0][0]],
-                           [uy, ux]])
+                           [uy, ux],
+                           [unP1[0][1], unP1[0][0]],
+                           [unP2[0][1], unP2[0][0]],
+                           [pp_in1[0][1], pp_in1[0][0]],
+                           [pp_in0[0][1], pp_in0[0][0]],
+                           [pp_in2[0][1], pp_in2[0][0]],
+                           ])
 
         # 4 pixels for squire, so 84=4*21
         # destination = np.array([[0,0], [0,99], [0,199],
         #           [99,0],[99,99],[99,199],
         #           [199,0],[199,99],[199,199]])
-        destination = np.array([[0,0], [0,83], [83,83], [83,0]])
+        destination = np.array([[0,0], [0,83], [83,83], [83,0], [28,0], [83,54], [28,28], [28,54], [54,54]])
         # source = np.array([[43, 55], [166,46],[274,285]])
 
         return source, destination, source_draw

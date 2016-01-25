@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="415ee1c5-89b8-444e-87f9-4a434b54d940" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FF/FF.py" afterPath="$PROJECT_DIR$/FF/FF.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/qr_reader2.iml" afterPath="$PROJECT_DIR$/.idea/qr_reader2.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_01m.py" afterPath="$PROJECT_DIR$/test_01m.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="qr_reader2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,7 +21,7 @@
     <SUITE FILE_PATH="coverage/qr_reader2$one.coverage" NAME="one Coverage Results" MODIFIED="1453231760341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/qr_reader2$batch.coverage" NAME="batch Coverage Results" MODIFIED="1453231776779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/qr_reader2$roman.coverage" NAME="roman Coverage Results" MODIFIED="1453523856286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/qr_reader2$test_01_FF.coverage" NAME="test_01_FF Coverage Results" MODIFIED="1453737470493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/qr_reader2$test_01_FF.coverage" NAME="test_01_FF Coverage Results" MODIFIED="1453738956695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -45,21 +42,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FF.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FF.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FF/FF.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.862069">
-              <caret line="210" column="14" selection-start-line="210" selection-start-column="14" selection-end-line="210" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.64285713">
+              <caret line="231" column="105" selection-start-line="231" selection-start-column="105" selection-end-line="231" selection-end-column="105" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_01m.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_01m.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_01m.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0336634">
-              <caret line="124" column="68" selection-start-line="124" selection-start-column="68" selection-end-line="124" selection-end-column="68" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -70,8 +67,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="30" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="30" />
+            <state vertical-scroll-proportion="-5.448276">
+              <caret line="41" column="9" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="97" />
               <folding />
             </state>
           </provider>
@@ -920,27 +917,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FF/FF.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.862069">
-          <caret line="210" column="14" selection-start-line="210" selection-start-column="14" selection-end-line="210" selection-end-column="14" />
+        <state vertical-scroll-proportion="-5.448276">
+          <caret line="41" column="9" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="97" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_01m.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0336634">
-          <caret line="124" column="68" selection-start-line="124" selection-start-column="68" selection-end-line="124" selection-end-column="68" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FF/FF.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64285713">
+          <caret line="231" column="105" selection-start-line="231" selection-start-column="105" selection-end-line="231" selection-end-column="105" />
+          <folding />
         </state>
       </provider>
     </entry>

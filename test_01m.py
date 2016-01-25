@@ -19,7 +19,7 @@ def isQrVertex(p1, p2, p3):
 
     return False, 0, 99999
 
-myDir = 'balls3'
+myDir = 'balls_gold'
 tmpDir = 'tmp'
 found_num = 0
 FF.FF.readSettings()
@@ -123,16 +123,18 @@ for subdir, dirs, files in os.walk(myDir):
                 cv2.circle(img,tuple(drawMx[1]),4, (127, 255, 255), 2)
                 cv2.circle(img,tuple(drawMx[2]),4, (127, 255, 255), 2)
                 cv2.circle(img,tuple(drawMx[3]),4, (127, 255, 0), 3)
-                print(sMx)
+                # print(sMx)
 
                 # thresh2 = 255-thresh
-                rQr = FF.FF.getRightQr(sMx, dMx, gray)
+                # rQr = FF.FF.getRightQr(sMx, dMx, gray)
+                rQr = FF.FF.getRightQr(sMx, dMx, 255-thresh)
+                cv2.copyMakeBorder(rQr, 10, 10, 10, 10, cv2.BORDER_CONSTANT, rQr, (255))
 
                 # saving QR
-                cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file, rQr)
+                cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+'.png', rQr)
 
                 # QR recognition
-                print( FF.FF.getQR(os.path.dirname(__file__)+os.path.sep + 'QR_'+file), file )
+                print( FF.FF.getQR(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
 
 
         cv2.imwrite(tmpDir + os.path.sep + file, img)
