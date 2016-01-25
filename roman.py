@@ -186,9 +186,9 @@ def find_sphere(image_orig):
 	
 	
 if __name__ == "__main__":
-    for i in os.listdir():
-        image_orig = cv2.imread(i)
-        image = find_sphere(image_orig)
-        for frac in np.linspace(0.8, 1.1, 10):
-            image_distorted = distort_image(image, frac)
-            find_qr_code(image_distorted)
+    # for i in os.listdir():
+    image_orig = cv2.imread('main.png')
+    image = find_sphere(image_orig)
+    for frac in np.linspace(0.8, 1.1, 10):
+        image_distorted = distort_image(image, frac)
+        find_qr_code(image_distorted)

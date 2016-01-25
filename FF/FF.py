@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import subprocess, os
 import ConfigParser
+from scipy.interpolate import griddata
 
 class FF:
     # zbar = 'C:/Program Files (x86)/ZBar/bin/zbarimg.exe'
@@ -44,6 +45,11 @@ class FF:
     def crop_img3(img_origin):
         h_origin, w_origin = img_origin.shape[:2]
         return img_origin[FF.crop_top:h_origin-FF.crop_bottom, FF.crop_left:w_origin-FF.crop_right]
+
+    @staticmethod
+    def crop_img4(img_origin):
+        h_origin, w_origin = img_origin.shape[:2]
+        return img_origin[150:h_origin-170, 600:w_origin-560]
 
     @staticmethod
     def toSphere(src):
@@ -109,3 +115,50 @@ class FF:
 
         # apply gamma correction using the lookup table
         return cv2.LUT(image, table)
+
+    @staticmethod
+    def getWarpMx(s1, s2, s3, cent, corner_num):
+        far1, far2, far3 = 0, 0, 0
+        farP1, farP2, farP3 = None, None, None
+        for p in s1:
+            cur_dist = np.linalg.norm(p-cent)
+            if cur_dist > far1:
+                far1 = cur_dist
+                farP1 = p
+
+        for p in s2:
+            cur_dist = np.linalg.norm(p-cent)
+            if cur_dist > far2:
+                far2 = cur_dist
+                farP2 = p
+
+        for p in s3:
+            cur_dist = np.linalg.norm(p-cent)
+            if cur_dist > far3:
+                far3 = cur_dist
+                farP3 = p
+
+        source = np.array([[farP1[0][0], farP1[0][1]], [farP2[0][0], farP2[0][1]], [farP3[0][0], farP3[0][1]]])
+        print(source)
+
+        # 4 pixels for squire, so 84=4*21
+        # destination = np.array([[0,0], [0,99], [0,199],
+        #           [99,0],[99,99],[99,199],
+        #           [199,0],[199,99],[199,199]])
+        destination = np.array([[0,0], [0,83], [83,83]])
+        # source = np.array([[43, 55], [166,46],[274,285]])
+
+        return source, destination
+
+    @staticmethod
+    def getRightQr( source, destination, img):
+        grid_x, grid_y = np.mgrid[0:83:84j, 0:83:84j]
+        grid_z = griddata(destination, source, (grid_x, grid_y), method='cubic')
+        map_x = np.append([], [ar[:,1] for ar in grid_z]).reshape(84,84)
+        map_y = np.append([], [ar[:,0] for ar in grid_z]).reshape(84,84)
+        map_x_32 = map_x.astype('float32')
+        map_y_32 = map_y.astype('float32')
+
+        warped = cv2.remap(img, map_x_32, map_y_32, cv2.INTER_CUBIC)#cv2.INTER_LINEAR
+
+        return warped

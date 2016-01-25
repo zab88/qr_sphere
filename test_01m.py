@@ -19,7 +19,7 @@ def isQrVertex(p1, p2, p3):
 
     return False, 0, 99999
 
-myDir = 'balls2'
+myDir = 'balls3'
 tmpDir = 'tmp'
 found_num = 0
 FF.FF.readSettings()
@@ -29,15 +29,21 @@ for subdir, dirs, files in os.walk(myDir):
         file_path = subdir + os.path.sep + file
         abs_file_path = os.path.dirname(__file__)+'/'+file_path
 
-        if (file[-4:] != '.png'):
+        if (file[-4:] != '.png' and file[-4:] != '.jpg'):
             continue
 
         all_squires = []
         all_centers = []
         img = cv2.imread(abs_file_path)
+        #crop
+        img = FF.FF.crop_img4(img)
+        #white balance
         img = FF.FF.adjust_gamma(img, 1.5)
+        #blur
         img = cv2.blur(img, (3,3))
-        img = FF.FF.crop_img3(img)
+        # sphere warping
+        img = FF.FF.toSphere(img.copy())
+        # to gray
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # ret,thresh = cv2.threshold(gray,127,255,1)
         # ret, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_OTSU)
@@ -94,6 +100,20 @@ for subdir, dirs, files in os.walk(myDir):
                 cv2.line(img, tuple(all_centers[i[0]]), tuple(all_centers[i[1]]), (255, 0, 255), 4)
                 cv2.line(img, tuple(all_centers[i[1]]), tuple(all_centers[i[2]]), (255, 0, 255), 4)
                 cv2.line(img, tuple(all_centers[i[2]]), tuple(all_centers[i[0]]), (255, 0, 255), 4)
+                # making remap matrix
+                cc_x = int( float(all_centers[i[0]][0]+all_centers[i[0]][0]+all_centers[i[0]][0])/3.0 )
+                cc_y = int( float(all_centers[i[0]][1]+all_centers[i[0]][1]+all_centers[i[0]][1])/3.0 )
+
+                sMx, dMx = FF.FF.getWarpMx(all_squires[i[0]], all_squires[i[1]], all_squires[i[2]], [cc_y, cc_x], corner_num)
+                # thresh2 = 255-thresh
+                rQr = FF.FF.getRightQr(sMx, dMx, gray)
+
+                # saving QR
+                cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file, rQr)
+
+                # QR recognition
+                print( FF.FF.getQR(os.path.dirname(__file__)+os.path.sep + 'QR_'+file), file )
+
 
         cv2.imwrite(tmpDir + os.path.sep + file, img)
         cv2.imwrite(tmpDir + os.path.sep + 'bin_'+file, thresh)
