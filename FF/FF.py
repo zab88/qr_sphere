@@ -139,7 +139,7 @@ class FF:
                 farP3 = p
 
         source = np.array([[farP1[0][0], farP1[0][1]], [farP2[0][0], farP2[0][1]], [farP3[0][0], farP3[0][1]]])
-        print(source)
+        # print(source)
 
         # 4 pixels for squire, so 84=4*21
         # destination = np.array([[0,0], [0,99], [0,199],

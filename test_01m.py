@@ -65,7 +65,9 @@ for subdir, dirs, files in os.walk(myDir):
         # cv2.waitKey(0)
         thresh = 255 - thresh
 
-        contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        #depend on version of cv2, it changed in 3.0
+        _, contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # contours,h = cv2.findContours(thresh.copy(), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
         # contours,h = cv2.findContours(thresh.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -92,7 +94,14 @@ for subdir, dirs, files in os.walk(myDir):
                     cv2.circle(img, (cx, cy), 3, (0, 255, 255), 3)
 
         #we have
+        combos = list()
         for i in itertools.permutations(range(0, len(all_centers) ), 3):
+            if ( sorted(list(i)) ) not in combos:
+                combos.append(sorted(list(i)))
+        # print(combos)
+
+        # for i in itertools.permutations(range(0, len(all_centers) ), 3):
+        for i in combos:
             isQr, corner_num, diag_length = isQrVertex(all_centers[i[0]], all_centers[i[1]], all_centers[i[2]])
             # print(diag_length, h, w)
             if isQr and float(diag_length) < float(h+w)/5.0:
@@ -101,10 +110,16 @@ for subdir, dirs, files in os.walk(myDir):
                 cv2.line(img, tuple(all_centers[i[1]]), tuple(all_centers[i[2]]), (255, 0, 255), 4)
                 cv2.line(img, tuple(all_centers[i[2]]), tuple(all_centers[i[0]]), (255, 0, 255), 4)
                 # making remap matrix
-                cc_x = int( float(all_centers[i[0]][0]+all_centers[i[0]][0]+all_centers[i[0]][0])/3.0 )
-                cc_y = int( float(all_centers[i[0]][1]+all_centers[i[0]][1]+all_centers[i[0]][1])/3.0 )
+                cc_x = int( float(all_centers[i[0]][0]+all_centers[i[1]][0]+all_centers[i[2]][0])/3.0 )
+                cc_y = int( float(all_centers[i[0]][1]+all_centers[i[1]][1]+all_centers[i[2]][1])/3.0 )
+                cv2.circle(img, (cc_x, cc_y), 3, (0, 55, 255), 3)
 
                 sMx, dMx = FF.FF.getWarpMx(all_squires[i[0]], all_squires[i[1]], all_squires[i[2]], [cc_y, cc_x], corner_num)
+                #show vertextes
+                cv2.putText(img, '1', tuple(sMx[0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                cv2.putText(img, '2', tuple(sMx[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                cv2.putText(img, '3', tuple(sMx[2]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+
                 # thresh2 = 255-thresh
                 rQr = FF.FF.getRightQr(sMx, dMx, gray)
 
