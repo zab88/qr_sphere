@@ -7,6 +7,7 @@ from scipy.interpolate import griddata
 class FF:
     # zbar = 'C:/Program Files (x86)/ZBar/bin/zbarimg.exe'
     zbar = os.path.dirname(__file__)+os.path.sep + '/../bin'+os.path.sep+'zbarimg.exe'
+    zxing = os.path.dirname(__file__)+os.path.sep + '/../zxing'+os.path.sep+'Bingo.Cli.Recognizer.exe'
 
     def __init__(self):
         pass
@@ -24,7 +25,7 @@ class FF:
     def black_and_white(img):
         img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY )
         img_blur = cv2.blur(img_grey, (5, 5))
-        img_cropped = FF.crop_img3(img_blur)
+        img_cropped = FF.crop_img4(img_blur)
         img_bin = cv2.threshold(img_cropped, 127, 255, cv2.THRESH_OTSU)[1]
         # img_bin = cv2.threshold(img_cropped, 100, 255, cv2.THRESH_BINARY)[1]
         # img_bin = cv2.morphologyEx(img_bin, cv2.MORPH_OPEN, (3,3), iterations=1)
@@ -97,6 +98,20 @@ class FF:
         try:
             # print('"'+FF.zbar+'" -q "' + abs_file_path+'"')
             out = subprocess.check_output('"'+FF.zbar+'" -q "' + abs_file_path+'"', shell=True, stderr=subprocess.STDOUT)
+            # files_found += 1
+            # print(file_path, out)
+            result = out
+        except subprocess.CalledProcessError as e:
+            out = e.output
+
+        return result
+
+    @staticmethod
+    def getQR2(abs_file_path):
+        result = None
+        try:
+            # print('"'+FF.zbar+'" -q "' + abs_file_path+'"')
+            out = subprocess.check_output('"'+FF.zxing+'" zxing "' + abs_file_path+'"', shell=True, stderr=subprocess.STDOUT)
             # files_found += 1
             # print(file_path, out)
             result = out

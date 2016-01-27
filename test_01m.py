@@ -134,7 +134,8 @@ for subdir, dirs, files in os.walk(myDir):
                 cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+'.png', rQr)
 
                 # QR recognition
-                print( FF.FF.getQR(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
+                # print( FF.FF.getQR(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
+                print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
 
 
         cv2.imwrite(tmpDir + os.path.sep + file, img)
