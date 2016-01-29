@@ -216,6 +216,31 @@ class FF:
                 dist_max = cur_dist
                 unP2 = p
 
+        #searching last on SS1 and on SS2
+        for p in SS1:
+            if (p[0][0]==pp_edge1[0][0] and p[0][1]==pp_edge1[0][1]) or (p[0][0]==unP1[0][0] and p[0][1]==unP1[0][1]) or (p[0][0]==pp_in1[0][0] and p[0][1]==pp_in1[0][1]):
+                continue
+            pp_bok10 = p
+        for p in SS2:
+            if (p[0][0]==pp_edge2[0][0] and p[0][1]==pp_edge2[0][1]) or (p[0][0]==unP2[0][0] and p[0][1]==unP2[0][1]) or (p[0][0]==pp_in2[0][0] and p[0][1]==pp_in2[0][1]):
+                continue
+            pp_bok20 = p
+
+        # searching sides of zero
+        dist_min1 = 99999
+        dist_min2 = 99999
+        for p in SS0:
+            cur_dist1 = np.linalg.norm(p-pp_bok10)
+            cur_dist2 = np.linalg.norm(p-pp_bok20)
+            if (p[0][0]==pp_in0[0][0] and p[0][1]==pp_in0[0][1]) or (p[0][0]==pp_edge[0][0] and p[0][1]==pp_edge[0][1]):
+                continue
+            if cur_dist1 < dist_min1:
+                dist_min1 = cur_dist1
+                pp_bok01 = p
+            if cur_dist2 < dist_min2:
+                dist_min2 = cur_dist2
+                pp_bok02 = p
+
         # getting unknown vertex
         ux, uy = FF.line_intersection((list(unP1[0]), list(pp_edge1[0])), (list(unP2[0]), list(pp_edge2[0])))
         unP4 = [ux, uy]
@@ -238,13 +263,22 @@ class FF:
                            [pp_in1[0][1], pp_in1[0][0]],
                            [pp_in0[0][1], pp_in0[0][0]],
                            [pp_in2[0][1], pp_in2[0][0]],
+                           [pp_bok10[0][1], pp_bok10[0][0]],
+                           [pp_bok20[0][1], pp_bok20[0][0]],
+                           [pp_bok01[0][1], pp_bok01[0][0]],
+                           [pp_bok02[0][1], pp_bok02[0][0]]
                            ])
 
         # 4 pixels for squire, so 84=4*21
         # destination = np.array([[0,0], [0,99], [0,199],
         #           [99,0],[99,99],[99,199],
         #           [199,0],[199,99],[199,199]])
-        destination = np.array([[0,0], [0,83], [83,83], [83,0], [28,0], [83,54], [28,28], [28,54], [54,54]])
+        destination = np.array([[0,0], [0,83], [83,83], [83,0], [28,0], [83,54], [28,28], [28,54], [54,54],
+                                [0, 28],
+                                [54, 83],
+                                [0, 54],
+                                [28, 83]
+                                ])
         # source = np.array([[43, 55], [166,46],[274,285]])
 
         return source, destination, source_draw

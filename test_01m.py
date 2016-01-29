@@ -128,14 +128,36 @@ for subdir, dirs, files in os.walk(myDir):
                 # thresh2 = 255-thresh
                 # rQr = FF.FF.getRightQr(sMx, dMx, gray)
                 rQr = FF.FF.getRightQr(sMx, dMx, 255-thresh)
+                rQr = cv2.pyrUp(rQr)
+                rQr = cv2.pyrUp(rQr)
+                # rQr = cv2.pyrDown(rQr)
+                # rQr = cv2.pyrDown(rQr)
+                # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+                # rQr = cv2.pyrDown(rQr)
+                # rQr = cv2.pyrDown(rQr)
+                rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+
+                rQr = cv2.flip(rQr, 1)
+                # rQr = cv2.flip(rQr, 0)
+
+                M = cv2.getRotationMatrix2D((rQr.shape[1]/2, rQr.shape[0]/2), -90, 1)
+                rQr = cv2.warpAffine(rQr.copy(), M, (rQr.shape[1], rQr.shape[0]), borderValue=255)
+                # rQr = cv2.flip(rQr, 1)
+                # M = cv2.getRotationMatrix2D((rQr.shape[1]/2, rQr.shape[0]/2), -45, 1)
+                # rQr = cv2.warpAffine(rQr.copy(), M, (rQr.shape[1], rQr.shape[0]))
+
+                # rQr = cv2.pyrDown(rQr)
+                # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+                # rQr = cv2.pyrDown(rQr)
+                # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
                 cv2.copyMakeBorder(rQr, 10, 10, 10, 10, cv2.BORDER_CONSTANT, rQr, (255))
 
                 # saving QR
                 cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+'.png', rQr)
 
                 # QR recognition
-                # print( FF.FF.getQR(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
-                print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
+                print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep+'tmp'+os.path.sep+'QR_'+file+'.png'), file )
+                # print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
 
 
         cv2.imwrite(tmpDir + os.path.sep + file, img)
