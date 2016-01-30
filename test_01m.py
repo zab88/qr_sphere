@@ -3,6 +3,7 @@ from scipy.interpolate import griddata
 import numpy as np
 import itertools
 from FF import FF
+from FF import SearcherSimplest
 
 def isQrVertex(p1, p2, p3):
     dist12 = np.linalg.norm(p1-p2)
@@ -22,6 +23,7 @@ def isQrVertex(p1, p2, p3):
 myDir = 'balls_gold'
 tmpDir = 'tmp'
 found_num = 0
+total_images = 0
 FF.FF.readSettings()
 
 for subdir, dirs, files in os.walk(myDir):
@@ -30,6 +32,16 @@ for subdir, dirs, files in os.walk(myDir):
         abs_file_path = os.path.dirname(__file__)+'/'+file_path
 
         if (file[-4:] != '.png' and file[-4:] != '.jpg'):
+            continue
+
+        total_images += 1
+
+        # Applying SearcherSimplest
+        searcher1 = SearcherSimplest.SearcherSimplest(abs_file_path, file)
+        res = searcher1.search()
+        if res:
+            print(res, 'Simplest')
+            found_num += 1
             continue
 
         all_squires = []
@@ -156,9 +168,14 @@ for subdir, dirs, files in os.walk(myDir):
                 cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+'.png', rQr)
 
                 # QR recognition
-                print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep+'tmp'+os.path.sep+'QR_'+file+'.png'), file )
+                res = FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep+'tmp'+os.path.sep+'QR_'+file+'.png')
                 # print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
+                if res and res != 'NOT FOUND\r\n':
+                    found_num += 1
+                    print(res, file)
 
 
         cv2.imwrite(tmpDir + os.path.sep + file, img)
         cv2.imwrite(tmpDir + os.path.sep + 'bin_'+file, thresh)
+
+print(found_num, total_images)

@@ -32,9 +32,9 @@ for subdir, dirs, files in os.walk(myDir):
         new_img_rotated = FF.FF.toSphere(black_rotated.copy())
         cv2.imwrite(tmpDir + os.path.sep + 'rot_'+file, new_img)
 
-        qr_init = FF.FF.getQR2(abs_file_path)
-        qr_found = FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep+tmpDir+os.path.sep + file)
-        qr_rotated = FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep+tmpDir+os.path.sep + 'rot_' + file)
+        qr_init = FF.FF.getQR(abs_file_path)
+        qr_found = FF.FF.getQR(os.path.dirname(__file__)+os.path.sep+tmpDir+os.path.sep + file)
+        qr_rotated = FF.FF.getQR(os.path.dirname(__file__)+os.path.sep+tmpDir+os.path.sep + 'rot_' + file)
         if qr_init and qr_init != 'NOT FOUND\r\n':
             print(qr_init, 'init_' +file)
             files_found += 1
