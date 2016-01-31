@@ -268,20 +268,28 @@ class FF:
                            [pp_bok01[0][1], pp_bok01[0][0]],
                            [pp_bok02[0][1], pp_bok02[0][0]]
                            ])
+        sources = []
+        for xx in range(-20, 20, 10):
+            for yy in range(-20, 20, 10):
+                ux_new = ux+xx
+                uy_new = uy+yy
+                source_new = source
+                source_new[3] = [uy_new, ux_new]
+                sources.append(source_new.copy())
 
         # 4 pixels for squire, so 84=4*21
         # destination = np.array([[0,0], [0,99], [0,199],
         #           [99,0],[99,99],[99,199],
         #           [199,0],[199,99],[199,199]])
-        destination = np.array([[0,0], [0,83], [83,83], [83,0], [28,0], [83,54], [28,28], [28,54], [54,54],
+        destination = np.array([[0,0], [0,83], [83,83], [83,0], [28,0], [83,56], [28,28], [28,56], [56,56],
                                 [0, 28],
-                                [54, 83],
-                                [0, 54],
+                                [56, 83],
+                                [0, 56],
                                 [28, 83]
                                 ])
         # source = np.array([[43, 55], [166,46],[274,285]])
 
-        return source, destination, source_draw
+        return sources, destination, source_draw
 
     @staticmethod
     def getRightQr( source, destination, img):

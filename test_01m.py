@@ -126,53 +126,55 @@ for subdir, dirs, files in os.walk(myDir):
                 cc_y = int( float(all_centers[i[0]][1]+all_centers[i[1]][1]+all_centers[i[2]][1])/3.0 )
                 cv2.circle(img, (cc_x, cc_y), 3, (0, 55, 255), 3)
 
-                sMx, dMx, drawMx = FF.FF.getWarpMx(all_squires[i[0]], all_squires[i[1]], all_squires[i[2]], [cc_x, cc_y], corner_num)
-                #show vertextes
-                # cv2.putText(img, '1', tuple(sMx[0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
-                # cv2.putText(img, '2', tuple(sMx[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
-                # cv2.putText(img, '3', tuple(sMx[2]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
-                cv2.circle(img,tuple(drawMx[0]),4, (127, 255, 255), 2)
-                cv2.circle(img,tuple(drawMx[1]),4, (127, 255, 255), 2)
-                cv2.circle(img,tuple(drawMx[2]),4, (127, 255, 255), 2)
-                cv2.circle(img,tuple(drawMx[3]),4, (127, 255, 0), 3)
-                # print(sMx)
+                sMx_ses, dMx, drawMx = FF.FF.getWarpMx(all_squires[i[0]], all_squires[i[1]], all_squires[i[2]], [cc_x, cc_y], corner_num)
+                for kk, sMx in enumerate(sMx_ses):
+                    #show vertextes
+                    # cv2.putText(img, '1', tuple(sMx[0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                    # cv2.putText(img, '2', tuple(sMx[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                    # cv2.putText(img, '3', tuple(sMx[2]), cv2.FONT_HERSHEY_SIMPLEX, 1, (127, 255, 255), thickness=2)
+                    cv2.circle(img,tuple(drawMx[0]),4, (127, 255, 255), 2)
+                    cv2.circle(img,tuple(drawMx[1]),4, (127, 255, 255), 2)
+                    cv2.circle(img,tuple(drawMx[2]),4, (127, 255, 255), 2)
+                    cv2.circle(img,tuple(drawMx[3]),4, (127, 255, 0), 3)
+                    # print(sMx)
 
-                # thresh2 = 255-thresh
-                # rQr = FF.FF.getRightQr(sMx, dMx, gray)
-                rQr = FF.FF.getRightQr(sMx, dMx, 255-thresh)
-                rQr = cv2.pyrUp(rQr)
-                rQr = cv2.pyrUp(rQr)
-                # rQr = cv2.pyrDown(rQr)
-                # rQr = cv2.pyrDown(rQr)
-                # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
-                # rQr = cv2.pyrDown(rQr)
-                # rQr = cv2.pyrDown(rQr)
-                rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+                    # thresh2 = 255-thresh
+                    # rQr = FF.FF.getRightQr(sMx, dMx, gray)
+                    rQr = FF.FF.getRightQr(sMx, dMx, 255-thresh)
+                    rQr = cv2.pyrUp(rQr)
+                    rQr = cv2.pyrUp(rQr)
+                    # rQr = cv2.pyrDown(rQr)
+                    # rQr = cv2.pyrDown(rQr)
+                    # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+                    # rQr = cv2.pyrDown(rQr)
+                    # rQr = cv2.pyrDown(rQr)
+                    rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
 
-                rQr = cv2.flip(rQr, 1)
-                # rQr = cv2.flip(rQr, 0)
+                    rQr = cv2.flip(rQr, 1)
+                    # rQr = cv2.flip(rQr, 0)
 
-                M = cv2.getRotationMatrix2D((rQr.shape[1]/2, rQr.shape[0]/2), -90, 1)
-                rQr = cv2.warpAffine(rQr.copy(), M, (rQr.shape[1], rQr.shape[0]), borderValue=255)
-                # rQr = cv2.flip(rQr, 1)
-                # M = cv2.getRotationMatrix2D((rQr.shape[1]/2, rQr.shape[0]/2), -45, 1)
-                # rQr = cv2.warpAffine(rQr.copy(), M, (rQr.shape[1], rQr.shape[0]))
+                    M = cv2.getRotationMatrix2D((rQr.shape[1]/2, rQr.shape[0]/2), -90, 1)
+                    rQr = cv2.warpAffine(rQr.copy(), M, (rQr.shape[1], rQr.shape[0]), borderValue=255)
+                    # rQr = cv2.flip(rQr, 1)
+                    # M = cv2.getRotationMatrix2D((rQr.shape[1]/2, rQr.shape[0]/2), -45, 1)
+                    # rQr = cv2.warpAffine(rQr.copy(), M, (rQr.shape[1], rQr.shape[0]))
 
-                # rQr = cv2.pyrDown(rQr)
-                # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
-                # rQr = cv2.pyrDown(rQr)
-                # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
-                cv2.copyMakeBorder(rQr, 10, 10, 10, 10, cv2.BORDER_CONSTANT, rQr, (255))
+                    # rQr = cv2.pyrDown(rQr)
+                    # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+                    # rQr = cv2.pyrDown(rQr)
+                    # rQr = cv2.threshold(rQr, 127, 255, cv2.THRESH_BINARY)[1]
+                    cv2.copyMakeBorder(rQr, 10, 10, 10, 10, cv2.BORDER_CONSTANT, rQr, (255))
 
-                # saving QR
-                cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+'.png', rQr)
+                    # saving QR
+                    cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+str(kk)+'.png', rQr)
 
-                # QR recognition
-                res = FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep+'tmp'+os.path.sep+'QR_'+file+'.png')
-                # print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
-                if res and res != 'NOT FOUND\r\n':
-                    found_num += 1
-                    print(res, file)
+                    # QR recognition
+                    res = FF.FF.getQR2(tmpDir+os.path.sep+'QR_'+file+str(kk)+'.png')
+                    # print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
+                    if res and res != 'NOT FOUND\r\n':
+                        found_num += 1
+                        print(res, file)
+                        break
 
 
         cv2.imwrite(tmpDir + os.path.sep + file, img)
