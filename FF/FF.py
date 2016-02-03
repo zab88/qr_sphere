@@ -53,6 +53,19 @@ class FF:
         return img_origin[150:h_origin-170, 600:w_origin-560]
 
     @staticmethod
+    def crop_by_cam(img_origin, cam_number):
+        if cam_number == 0:
+            cam_number = 3
+        Config = ConfigParser.ConfigParser()
+        Config.read("settings.ini")
+        h_origin, w_origin = img_origin.shape[:2]
+        crop_top = Config.getint('CAM_'+str(cam_number), 'crop_top')
+        crop_left = Config.getint('CAM_'+str(cam_number), 'crop_left')
+        crop_bottom = Config.getint('CAM_'+str(cam_number), 'crop_bottom')
+        crop_right = Config.getint('CAM_'+str(cam_number), 'crop_right')
+        return img_origin[crop_top:h_origin-crop_bottom, crop_left:w_origin-crop_right]
+
+    @staticmethod
     def toSphere(src):
         h, w = src.shape[0:2]
         # print(h, w, 'h, w of cropped')
@@ -269,8 +282,8 @@ class FF:
                            [pp_bok02[0][1], pp_bok02[0][0]]
                            ])
         sources = []
-        for xx in range(-20, 20, 10):
-            for yy in range(-20, 20, 10):
+        for xx in range(-32, 32, 8):
+            for yy in range(-32, 32, 8):
                 ux_new = ux+xx
                 uy_new = uy+yy
                 source_new = source

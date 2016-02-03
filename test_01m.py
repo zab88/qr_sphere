@@ -10,7 +10,7 @@ def isQrVertex(p1, p2, p3):
     dist13 = np.linalg.norm(p1-p3)
     dist23 = np.linalg.norm(p2-p3)
 
-    k1, k2, k3, k4 = 0.9, 1.1, 1.25, 1.55
+    k1, k2, k3, k4 = 0.85, 1.15, 1.21, 1.62
     if (dist12*k1 < dist13 < dist12*k2) and (dist13*k3<dist23<dist13*k4):
         return True, 1, dist23
     if (dist23*k1 < dist12 < dist23*k2) and (dist12*k3<dist13<dist12*k4):
@@ -21,6 +21,7 @@ def isQrVertex(p1, p2, p3):
     return False, 0, 99999
 
 myDir = 'balls_gold'
+# myDir = 'balls4'
 tmpDir = 'tmp'
 found_num = 0
 total_images = 0
@@ -40,15 +41,17 @@ for subdir, dirs, files in os.walk(myDir):
         searcher1 = SearcherSimplest.SearcherSimplest(abs_file_path, file)
         res = searcher1.search()
         if res:
-            print(res, 'Simplest')
+            print(res, 'Simplest', file)
             found_num += 1
             continue
 
+        go_to_next_file = False
         all_squires = []
         all_centers = []
         img = cv2.imread(abs_file_path)
         #crop
-        img = FF.FF.crop_img4(img)
+        # img = FF.FF.crop_img4(img)
+        img = FF.FF.crop_by_cam(img, int(file[-5:-4])%3)
         #white balance
         img = FF.FF.adjust_gamma(img, 1.5)
         #blur
@@ -78,8 +81,8 @@ for subdir, dirs, files in os.walk(myDir):
         thresh = 255 - thresh
 
         #depend on version of cv2, it changed in 3.0
-        # _, contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        _, contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # contours,hhh_ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # contours,h = cv2.findContours(thresh.copy(), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
         # contours,h = cv2.findContours(thresh.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -113,7 +116,9 @@ for subdir, dirs, files in os.walk(myDir):
         # print(combos)
 
         # for i in itertools.permutations(range(0, len(all_centers) ), 3):
-        for i in combos:
+        for _kk, i in enumerate(combos):
+            if go_to_next_file:
+                break
             isQr, corner_num, diag_length = isQrVertex(all_centers[i[0]], all_centers[i[1]], all_centers[i[2]])
             # print(diag_length, h, w)
             if isQr and float(diag_length) < float(h+w)/5.0:
@@ -166,14 +171,16 @@ for subdir, dirs, files in os.walk(myDir):
                     cv2.copyMakeBorder(rQr, 10, 10, 10, 10, cv2.BORDER_CONSTANT, rQr, (255))
 
                     # saving QR
-                    cv2.imwrite(tmpDir + os.path.sep + 'QR_'+file+str(kk)+'.png', rQr)
+                    tmp_file_img = tmpDir+os.path.sep+'QR_'+file+str(_kk)+'_'+str(kk)+'.png'
+                    cv2.imwrite(tmp_file_img, rQr)
 
                     # QR recognition
-                    res = FF.FF.getQR2(tmpDir+os.path.sep+'QR_'+file+str(kk)+'.png')
+                    res = FF.FF.getQR2(tmp_file_img)
                     # print( FF.FF.getQR2(os.path.dirname(__file__)+os.path.sep + 'QR_'+file+'.png'), file )
                     if res and res != 'NOT FOUND\r\n':
                         found_num += 1
-                        print(res, file)
+                        go_to_next_file = True
+                        print(res, file, kk)
                         break
 
 
